@@ -4,10 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"io"
-	"github.com/al3bdzo/Pokedex/internal/pokecache"
 )
 
-func (c *Client) ListLocations(pageURL *string, pokeCache *pokecache.Cache) (Locations, error){
+func (c *Client) ListLocations(pageURL *string) (Locations, error){
 	url := baseURL + "/location-area"
 	if pageURL != nil {
 		url = *pageURL
@@ -15,7 +14,7 @@ func (c *Client) ListLocations(pageURL *string, pokeCache *pokecache.Cache) (Loc
 
 	var locs Locations
 
-	data, ok := pokeCache.Get(url)
+	data, ok := c.cache.Get(url)
 	if ok {
 		err := json.Unmarshal(data, &locs)
 		if err != nil {
@@ -45,7 +44,7 @@ func (c *Client) ListLocations(pageURL *string, pokeCache *pokecache.Cache) (Loc
 		return Locations{}, err
 	}
 
-	pokeCache.Add(url, data)
+	c.cache.Add(url, data)
 
 	return locs, nil
 }

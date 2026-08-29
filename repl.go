@@ -7,7 +7,6 @@ import (
 	"bufio"
 
 	"github.com/al3bdzo/Pokedex/internal/pokeapi"
-	"github.com/al3bdzo/Pokedex/internal/pokecache"
 )
 
 type cliCommand struct {
@@ -21,7 +20,6 @@ type config struct {
 	nextURL *string
 	previousURL *string
 	pokeapiClient pokeapi.Client
-	pokeCache *pokecache.Cache
 }
 
 

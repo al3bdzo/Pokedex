@@ -7,7 +7,7 @@ import (
 )
 
 func commandMap(conf *config) error {
-	locs, err := conf.pokeapiClient.ListLocations(conf.nextURL, conf.pokeCache)
+	locs, err := conf.pokeapiClient.ListLocations(conf.nextURL)
 	if err != nil {
 		return err
 	}
@@ -24,7 +24,7 @@ func commandMapb(conf *config) error {
 		return errors.New("no previous page to go back to")
 	}
 
-	locs, err := conf.pokeapiClient.ListLocations(conf.previousURL, conf.pokeCache)
+	locs, err := conf.pokeapiClient.ListLocations(conf.previousURL)
 	if err != nil {
 		return err
 	}
