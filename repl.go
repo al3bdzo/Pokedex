@@ -15,6 +15,8 @@ type cliCommand struct {
 
 type config struct {
 	supportedCommands map[string]cliCommand
+	nextURL string
+	previousURL string
 }
 
 
@@ -59,6 +61,16 @@ func getCommands() map[string]cliCommand {
 			name: "exit",
 			description: "Exit the Pokedex",
 			callback: commandExit,
+		},
+		"map" : {
+			name: "map",
+			description: "display the location of 20 location areas in pokemon world",
+			callback: commandMap,
+		},
+		"mapb" : {
+			name: "mapb",
+			description: "displays the prevuios 20 location areas in pokemon world",
+			callback: commandMapb,
 		},
 	}
 }
