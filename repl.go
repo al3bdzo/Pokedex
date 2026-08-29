@@ -19,7 +19,7 @@ type config struct {
 	supportedCommands map[string]cliCommand
 	nextURL *string
 	previousURL *string
-	pokeapiClient pokepai.Client
+	pokeapiClient pokeapi.Client
 }
 
 

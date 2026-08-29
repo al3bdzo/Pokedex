@@ -1,9 +1,9 @@
 package pokeapi
 
-type locations struct {
+type Locations struct {
 	Count int `json:"count"`
-	Next string `json:"next"`
-	Previous string `json:"previous"`
+	Next *string `json:"next"`
+	Previous *string `json:"previous"`
 	Results []struct{
 		Name string `json:"name"`
 		Url string `json:"url"`

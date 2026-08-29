@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"errors"
+	"github.com/al3bdzo/Pokedex/internal/pokeapi"
 )
-
-
 
 func commandMap(conf *config) error {
 	locs, err := conf.pokeapiClient.ListLocations(conf.nextURL)
@@ -13,10 +12,10 @@ func commandMap(conf *config) error {
 		return err
 	}
 
-	conf.nextURL = locations.Next
-	conf.previousURL = locations.Previous
+	conf.nextURL = locs.Next
+	conf.previousURL = locs.Previous
 
-	printMap(locations)
+	printMap(locs)
 	return nil
 }
 
@@ -30,14 +29,14 @@ func commandMapb(conf *config) error {
 		return err
 	}
 
-	conf.nextURL = locations.Next
-	conf.previousURL = locations.Previous
-	printMap(locations)
-	
+	conf.nextURL = locs.Next
+	conf.previousURL = locs.Previous
+	printMap(locs)
+
 	return nil
 }
 
-func printMap(locs locations) {
+func printMap(locs pokeapi.Locations) {
 	for _, location := range locs.Results {
 		fmt.Println(location.Name)
 	}

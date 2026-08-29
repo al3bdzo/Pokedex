@@ -1,9 +1,7 @@
 package pokeapi
 
-
 import (
 	"encoding/json"
-	"io"
 	"net/http"
 )
 
@@ -22,12 +20,12 @@ func (c *Client) ListLocations(pageURL *string) (Locations, error){
 	if err != nil {
 		return Locations{}, err
 	}
-	defer res.Body.Close
+	defer res.Body.Close()
 
-	var locs locations{}
+	var locs Locations
 	decoder := json.NewDecoder(res.Body)
 	if err := decoder.Decode(&locs); err != nil {
-		return locations{}, err
+		return Locations{}, err
 	}
 
 	return locs, nil
