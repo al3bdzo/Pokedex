@@ -1,21 +1,11 @@
 package main
 
 import (
-	"net/http"
-	"encoding/json"
 	"fmt"
 	"errors"
 )
 
-type locations struct {
-	Count int `json:"count"`
-	Next string `json:"next"`
-	Previous string `json:"previous"`
-	Results []struct{
-		Name string `json:"name"`
-		Url string `json:"url"`
-	} `json:"results"`
-}
+
 
 func commandMap(conf *config) error {
 	res, err := http.Get(conf.nextURL)
