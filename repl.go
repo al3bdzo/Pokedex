@@ -21,7 +21,7 @@ type config struct {
 	nextURL *string
 	previousURL *string
 	pokeapiClient pokeapi.Client
-	pokeCache pokecache.Cache
+	pokeCache *pokecache.Cache
 }
 
 
