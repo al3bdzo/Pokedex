@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"bufio"
+
+	"github.com/al3bdzo/Pokedex/internal/pokeapi"
 )
 
 type cliCommand struct {
@@ -15,8 +17,9 @@ type cliCommand struct {
 
 type config struct {
 	supportedCommands map[string]cliCommand
-	nextURL string
-	previousURL string
+	nextURL *string
+	previousURL *string
+	pokeapiClient pokepai.Client
 }
 
 

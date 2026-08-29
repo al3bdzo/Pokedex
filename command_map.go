@@ -8,49 +8,37 @@ import (
 
 
 func commandMap(conf *config) error {
-	res, err := http.Get(conf.nextURL)
+	locs, err := conf.pokeapiClient.ListLocations(conf.nextURL)
 	if err != nil {
-		return fmt.Errorf("error getting the response: %v", err)
-	}
-	defer res.Body.Close()
-
-	var locations locations
-	decoder := json.NewDecoder(res.Body)
-	if err := decoder.Decode(&locations); err != nil {
-		return fmt.Errorf("error parsing json: %v", err)
+		return err
 	}
 
 	conf.nextURL = locations.Next
 	conf.previousURL = locations.Previous
+
 	printMap(locations)
 	return nil
 }
 
 func commandMapb(conf *config) error {
-	if conf.previousURL == "" {
+	if conf.previousURL == nil {
 		return errors.New("no previous page to go back to")
 	}
-	res, err := http.Get(conf.previousURL)
-	if err != nil {
-		return fmt.Errorf("error getting the response: %v", err)
-	}
-	defer res.Body.Close()
 
-	var locations locations
-	decoder := json.NewDecoder(res.Body)
-	if err := decoder.Decode(&locations); err != nil {
-		return fmt.Errorf("error parsing json: %v", err)
+	locs, err := conf.pokeapiClient.ListLocations(conf.previousURL)
+	if err != nil {
+		return err
 	}
 
 	conf.nextURL = locations.Next
 	conf.previousURL = locations.Previous
 	printMap(locations)
+	
 	return nil
 }
 
-func printMap(locs locations) error {
+func printMap(locs locations) {
 	for _, location := range locs.Results {
 		fmt.Println(location.Name)
 	}
-	return nil
 }
