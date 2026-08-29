@@ -4,48 +4,61 @@ import (
 	"strings"
 	"fmt"
 	"os"
+	"bufio"
 )
 
 type cliCommand struct {
-	name string 
+	name string
 	description string
-	callback func() error
+	callback func(*config) error
 }
 
-var supportedCommands map[string]cliCommand
-
-func init() {
-	supportedCommands = map[string]cliCommand{
-		"exit": {
-			name: "exit",
-			description: "Exit the Pokedex",
-			callback: commandExit,
-		},
-		"help": {
-			name: "help",
-			description: "Displays a help message",
-			callback: commandHelp,
-		},
-	}
+type config struct {
+	supportedCommands map[string]cliCommand
 }
+
 
 func cleanInput(text string) []string{
 	return strings.Fields(strings.ToLower(text))
 }
 
-func commandExit() error{
-	fmt.Println("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
+func repl(conf *config) {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for {
+		fmt.Print("Pokedex > ")
+		scanner.Scan()
+
+		input := cleanInput(scanner.Text())
+		if len(input) == 0 {
+			continue
+		}
+
+		command, ok := conf.supportedCommands[input[0]]
+		if ok {
+			err := command.callback(conf)
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
+		} else {
+			fmt.Println("Unknown command")
+			continue
+		}
+	}
 }
 
-func commandHelp() error{
-	fmt.Println("Welcome to the Pokedex!")
-	fmt.Println("Usage:\n")
-
-	for _, command := range supportedCommands{
-		fmt.Printf("%s: %s\n", command.name, command.description)
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"help" : {
+			name : "help", 
+			description: "Displays a help message", 
+			callback: commandHelp,
+		},
+		"exit" : {
+			name: "exit",
+			description: "Exit the Pokedex",
+			callback: commandExit,
+		},
 	}
-
-	return nil
 }
