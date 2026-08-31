@@ -12,7 +12,7 @@ import (
 type cliCommand struct {
 	name string
 	description string
-	callback func(*config) error
+	callback func(*config, ...string) error
 }
 
 type config struct {
@@ -39,9 +39,14 @@ func repl(conf *config) {
 			continue
 		}
 
+		arg1 := ""
+		if len(input) > 1 {
+			arg1 = input[1]
+		}
+
 		command, ok := conf.supportedCommands[input[0]]
 		if ok {
-			err := command.callback(conf)
+			err := command.callback(conf, arg1)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -75,5 +80,11 @@ func getCommands() map[string]cliCommand {
 			description: "displays the prevuios 20 location areas in pokemon world",
 			callback: commandMapb,
 		},
+		"explore" : {
+			name: "explore <area_name>",
+			description: "lists all the Pokemon located in an area; take an argument: <area_name>",
+			callback: commandExplore,
+		},
+		
 	}
 }

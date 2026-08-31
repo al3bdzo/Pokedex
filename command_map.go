@@ -6,7 +6,7 @@ import (
 	"github.com/al3bdzo/Pokedex/internal/pokeapi"
 )
 
-func commandMap(conf *config) error {
+func commandMap(conf *config, optional ...string) error {
 	locs, err := conf.pokeapiClient.ListLocations(conf.nextURL)
 	if err != nil {
 		return err
@@ -19,7 +19,7 @@ func commandMap(conf *config) error {
 	return nil
 }
 
-func commandMapb(conf *config) error {
+func commandMapb(conf *config, optional ...string) error {
 	if conf.previousURL == nil {
 		return errors.New("no previous page to go back to")
 	}
