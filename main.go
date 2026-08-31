@@ -10,6 +10,9 @@ func main() {
 	conf := &config{
 		supportedCommands: getCommands(),
 		pokeapiClient: pokeClient,
+		user: user{
+			cuaghtPokemons: make(map[string]pokeapi.Pokemon),
+		},
 	}
 	repl(conf)
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/al3bdzo/Pokedex/internal/pokeapi"
 )
 
-func commandMap(conf *config, optional ...string) error {
+func commandMap(conf *config, args ...string) error {
 	locs, err := conf.pokeapiClient.ListLocations(conf.nextURL)
 	if err != nil {
 		return err

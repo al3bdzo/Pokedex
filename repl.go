@@ -20,6 +20,11 @@ type config struct {
 	nextURL *string
 	previousURL *string
 	pokeapiClient pokeapi.Client
+	user user
+}
+
+type user struct {
+	cuaghtPokemons map[string]pokeapi.Pokemon
 }
 
 
@@ -85,6 +90,10 @@ func getCommands() map[string]cliCommand {
 			description: "lists all the Pokemon located in an area; take an argument: <area_name>",
 			callback: commandExplore,
 		},
-		
+		"catch" : {
+			name: "catch <pokemon_name>",
+			description: "catches a pokemon and adds to users's Pokedex; takes an argument: <pokemon_name>",
+			callback: commandCatch,
+		},
 	}
 }
